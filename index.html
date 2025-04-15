@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的博客</title>
+    <meta charset="UTF-8">
+    <title>Deco808的创意工坊</title>
+    <!-- 引入Bootstrap快速美化 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 自定义作家风格 */
+        body {
+            background: #f8f9fa url('https://i.imgur.com/6GXWfQe.jpg') no-repeat fixed center; 
+            background-size: cover;
+            font-family: '楷体', serif;
+        }
+        .nav-bar {
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.9)!important;
+        }
+        .chapter-list {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .chapter-list:hover {
+            transform: translateX(10px);
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World！</h1>
-    <p>这是我的第一个博客页面 🎉</p>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg nav-bar fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">🖋️ Deco808的工坊</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#novel">小说</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#game">游戏</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#essay">随笔</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#hardware">硬件</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4">
+        <!-- 各板块内容将插入这里 -->
+    </div>
+
+    <!-- 脚本 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
