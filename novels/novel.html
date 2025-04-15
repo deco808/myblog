@@ -18,7 +18,7 @@
 
         // 加载并渲染Markdown
         if(chapterFile) {
-            fetch(`novels/${chapterFile}`)
+            fetch(`./${chapterFile}`) 
                 .then(response => response.text())
                 .then(md => {
                     document.getElementById('novelContent').innerHTML = marked.parse(md);
