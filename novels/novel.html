@@ -1,72 +1,40 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>作品详情</title>
-    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <!-- 作品封面和基本信息 -->
-        <div class="row mb-4" id="workHeader">
-            <div class="col-md-4">
-                <img id="workCover" class="img-fluid rounded shadow" alt="作品封面">
-            </div>
-            <div class="col-md-8">
-                <h1 id="workTitle" class="display-4"></h1>
-                <p class="lead" id="workAuthor"></p>
-                <p id="workDescription" class="text-muted"></p>
-            </div>
-        </div>
+<script>
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryType = urlParams.get('category');
+    const workId = urlParams.get('work');
 
-        <!-- 章节列表 -->
-        <div class="row" id="chaptersList">
-            <h3 class="mb-3">章节列表</h3>
-            <div class="list-group" id="chaptersContainer">
-                <!-- 章节动态生成 -->
-            </div>
-        </div>
-    </div>
+    // 加载作品数据（修正路径）
+    fetch(`categories.json`) // ← 路径修正
+        .then(res => res.json())
+        .then(categoriesData => {
+            const category = categoriesData.categories.find(c => c.type === categoryType);
+            const work = category.works.find(w => w.id === workId);
 
-    <script>
-        // 获取URL参数
-        const urlParams = new URLSearchParams(window.location.search);
-        const categoryType = urlParams.get('category');
-        const workId = urlParams.get('work');
+            // 填充作品信息
+            document.getElementById('workTitle').textContent = work.title;
+            document.getElementById('workCover').src = work.cover; // ← 直接使用配置中的完整路径
+            if(work.author) document.getElementById('workAuthor').textContent = `作者：${work.author}`;
+            if(work.description) document.getElementById('workDescription').innerHTML = work.description; // ← 改用 innerHTML 以支持 <br>
 
-        // 加载作品数据
-        fetch(`../novels/categories.json`)
-            .then(res => res.json())
-            .then(categoriesData => {
-                const category = categoriesData.categories.find(c => c.type === categoryType);
-                const work = category.works.find(w => w.id === workId);
-
-                // 填充作品信息
-                document.getElementById('workTitle').textContent = work.title;
-                document.getElementById('workCover').src = `../novels/${work.cover}`;
-                if(work.author) document.getElementById('workAuthor').textContent = `作者：${work.author}`;
-                if(work.description) document.getElementById('workDescription').textContent = work.description;
-
-                // 加载章节数据
-                return fetch(`../novels/${work.chapters_config}`);
-            })
-            .then(res => res.json())
-            .then(chaptersData => {
-                const container = document.getElementById('chaptersContainer');
-                chaptersData.chapters.forEach(chapter => {
-                    const chapterHTML = `
-                        <a href="novel.html?chapter=${chapter.file}&work=${workId}" 
-                           class="list-group-item list-group-item-action">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-1">${chapter.title}</h5>
-                                <small>${new Date().toLocaleDateString()}</small>
-                            </div>
-                            <p class="mb-1 text-muted">${chapter.preview}</p>
-                        </a>
-                    `;
-                    container.insertAdjacentHTML('beforeend', chapterHTML);
-                });
+            // 加载章节数据（路径修正）
+            return fetch(work.chapters_config); // ← 直接使用配置中的完整路径
+        })
+        .then(res => res.json())
+        .then(chaptersData => {
+            const container = document.getElementById('chaptersContainer');
+            chaptersData.chapters.forEach(chapter => {
+                const chapterHTML = `
+                    <a href="/novels/novel.html?category=${categoryType}&work=${workId}&chapter=${chapter.file}" 
+                       class="list-group-item list-group-item-action">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-1">${chapter.title}</h5>
+                            <small>${new Date(chapter.date).toLocaleDateString()}</small> <!-- 建议添加日期字段 -->
+                        </div>
+                        <p class="mb-1 text-muted">${chapter.preview}</p>
+                    </a>
+                `;
+                container.insertAdjacentHTML('beforeend', chapterHTML);
             });
-    </script>
-</body>
-</html>
+        });
+</script>
