@@ -11,58 +11,57 @@
     <!-- 共用导航栏（同前） -->
     
    <section class="card mb-4">
-    <div class="card-body">
-        <h2>📚 最新小说</h2>
-        <!-- 新增一个用于装载动态内容的容器 -->
-        <div id="novelList" class="row"></div>
-    </div>
-</section>
+    <!-- 新增分类展示区块 -->
+<div class="container mt-5" id="novelCategories">
+    <!-- 这里会被JS动态填充 -->
+</div>
 
-<!-- 将脚本移到页面底部（body结束标签前） -->
 <script>
-// 动态加载小说目录
-fetch('novels/chapters.json') // 路径正确写法
-    .then(response => response.json())
+// 加载分类数据
+fetch('novels/categories.json')
+    .then(res => res.json())
     .then(data => {
-        const container = document.getElementById('novelList');
+        const container = document.getElementById('novelCategories');
         
-        data.chapters.forEach(chapter => {
-            container.innerHTML += `
-                <div class="col-md-4 mb-3"> <!-- 响应式布局 -->
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5>${chapter.title}</h5>
-                            <p class="text-muted">${chapter.preview}</p>
-                            <a href="novels/novel.html?chapter=${chapter.file}" 
-                              class="btn btn-sm btn-outline-primary">
-                               阅读全文 →
-                            </a>
-                        </div>
+        data.categories.forEach(category => {
+            // 创建分类区块
+            const categoryHTML = `
+                <div class="category-section mb-5">
+                    <h2 class="text-primary mb-4">${category.name}</h2>
+                    <div class="row g-4" id="works-${category.type}">
+                        <!-- 作品卡片将在此动态生成 -->
                     </div>
                 </div>
             `;
+            container.insertAdjacentHTML('beforeend', categoryHTML);
+            
+            // 填充作品卡片
+            const worksContainer = document.getElementById(`works-${category.type}`);
+            category.works.forEach(work => {
+                const workCard = `
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow">
+                            <img src="novels/${work.cover}" class="card-img-top" alt="${work.title}封面">
+                            <div class="card-body">
+                                <h5 class="card-title">${work.title}</h5>
+                                <p class="card-text text-muted">${work.description || '暂无简介'}</p>
+                                <a href="novels/work.html?category=${category.type}&work=${work.id}" 
+                                   class="btn btn-primary">
+                                   查看作品
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                worksContainer.insertAdjacentHTML('beforeend', workCard);
+            });
         });
     });
 </script>
 
 
-        <!-- 游戏入口 -->
-        <section class="card mb-4">
-            <div class="card-body">
-                <h2>🎮 游戏展厅</h2>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="images/snake-preview.jpg" class="card-img-top">
-                            <div class="card-body">
-                                <h5>经典贪吃蛇</h5>
-                                <a href="games/snake.html" class="btn btn-sm btn-outline-secondary">开始游戏 →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
+        
     </div>
 
     <script src="js/loadContent.js"></script>
