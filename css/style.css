@@ -1,21 +1,19 @@
-/* css/style.css */
-body {
-    background: #f8f9fa;
-    font-family: '思源宋体', serif;
+.category-section {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 2rem;
 }
 
-.novel-card {
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
+.work-card {
     transition: transform 0.2s;
 }
 
-.novel-card:hover {
+.work-card:hover {
     transform: translateY(-5px);
 }
 
 .chapter-preview {
-    color: #6c757d;
-    font-size: 0.9em;
-    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
