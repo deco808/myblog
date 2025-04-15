@@ -1,0 +1,16 @@
+{
+    "chapters": [
+        {
+            "id": "chapter1",
+            "title": "第一章",
+            "file": "chapter1.md",
+            "preview": "简介..."
+        },
+        {
+            "id": "chapter2",
+            "title": "第二章",
+            "file": "chapter2.md",
+            "preview": "简介..."
+        }
+    ]
+}
