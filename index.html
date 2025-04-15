@@ -33,8 +33,8 @@ fetch('novels/chapters.json') // 路径正确写法
                         <div class="card-body">
                             <h5>${chapter.title}</h5>
                             <p class="text-muted">${chapter.preview}</p>
-                            <a href="novels/${chapter.file.replace('.md','.html')}" 
-                               class="btn btn-sm btn-outline-primary">
+                            <a href="novels/${chapter.file}" 
+                              class="btn btn-sm btn-outline-primary">
                                阅读全文 →
                             </a>
                         </div>
