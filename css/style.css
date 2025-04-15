@@ -1,0 +1,21 @@
+/* css/style.css */
+body {
+    background: #f8f9fa;
+    font-family: '思源宋体', serif;
+}
+
+.novel-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.novel-card:hover {
+    transform: translateY(-5px);
+}
+
+.chapter-preview {
+    color: #6c757d;
+    font-size: 0.9em;
+    line-height: 1.6;
+}
