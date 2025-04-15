@@ -27,25 +27,25 @@
             "name": "同人创作",
             "works": [
                 {
-                    "id": "fwork1",
+                    "id": "fkmt1",
                     "title": "fkmt《赌博霸王传》零标",
                     "description": "本页所有零标cp同人文，都是deco送给搓麻猫汉化小组群主lilocat的礼物~<br>目前群里修嵌溢出翻译不足，诚心邀请懂日语的宝宝来搓麻猫汉化组一起搓麻做汉化！"
-                    "cover": "fanfiction/fwork1/cover.jpg",
-                    "chapters_config": "fanfiction/fwork1/chapters.json"
+                    "cover": "fanfiction/fkmt1/cover.jpg",
+                    "chapters_config": "fanfiction/fkmt1/chapters.json"
                 },
                  {
-                    "id": "fwork2",
+                    "id": "fkmt2",
                     "title": "fkmt《热斗吧，小边》",
                     "description": "丰富了一下原作里,男同性爱大叔看上小边之后的贞操麻将局<br>黑社会对小边还是一如既往地一边打骂一边溺爱<br>我本人也是边酱漫画的修嵌！"
-                    "cover": "fanfiction/fwork1/cover.jpg",
-                    "chapters_config": "fanfiction/fwork1/chapters.json"
+                    "cover": "fanfiction/fkmt2/cover.jpg",
+                    "chapters_config": "fanfiction/fkmt2/chapters.json"
                 },
                  {
-                    "id": "fwork3",
+                    "id": "fkmt3",
                     "title": "fkmt《逆转赌徒》",
                     "description": "赤木穿越到逆转裁判法庭，勇斗鹫巢，为开司伸冤的故事"
-                    "cover": "fanfiction/fwork1/cover.jpg",
-                    "chapters_config": "fanfiction/fwork1/chapters.json"
+                    "cover": "fanfiction/fkmt3/cover.jpg",
+                    "chapters_config": "fanfiction/fkmt3/chapters.json"
                 }
             ]
         }
