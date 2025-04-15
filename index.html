@@ -13,9 +13,25 @@
         <!-- 小说入口 -->
         <section class="card mb-4">
             <div class="card-body">
-                <h2>📚 最新小说</h2>
-                <div id="novelPreview"></div>
-                <a href="novels/" class="btn btn-primary">阅读全部章节</a>
+                <script>
+// 动态加载小说目录
+fetch('novels/chapters.json')
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById('novelList');
+    
+    data.chapters.forEach(chapter => {
+      container.innerHTML += `
+        <div class="chapter-card">
+          <h3>${chapter.title}</h3>
+          <p>${chapter.preview}</p>
+          <a href="novels/${chapter.file}">阅读全文</a>
+        </div>
+      `;
+    });
+  });
+</script>
+
             </div>
         </section>
 
