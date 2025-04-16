@@ -21,13 +21,13 @@ function loadNovel(chaptersConfigPath) {
                 chapterItem.innerHTML = `<a href="#" data-file="${chapter.file}">${chapter.title}</a>`;
                 chapterItem.addEventListener('click', (e) => {
                     e.preventDefault();
-                    loadChapterContent(`novels/${chapter.file}`);
+                    loadChapterContent(`../${chapter.file}`);
                 });
                 chapterList.appendChild(chapterItem);
 
                 // 默认加载第一章
                 if (index === 0) {
-                    loadChapterContent(`novels/${chapter.file}`);
+                    loadChapterContent(`../${chapter.file}`);
                 }
             });
         })
@@ -56,9 +56,3 @@ function loadChapterContent(filePath) {
             `;
         });
 }
-
-// 页面加载完成后自动执行
-window.addEventListener('DOMContentLoaded', () => {
-    // 示例：加载 fanfiction/fkmt2 的章节配置
-    loadNovel('novels/fanfiction/fkmt2/chapters.json');
-});

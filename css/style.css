@@ -1,39 +1,59 @@
-.category-section {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 2rem;
-}
-
-.work-card {
-    transition: transform 0.2s;
-}
-
-.work-card:hover {
-    transform: translateY(-5px);
-}
-
-.chapter-preview {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-/* filepath: c:\Users\李淑新\myblog\css\style.css */
+/* 全局样式 */
 body {
     font-family: 'Microsoft YaHei', sans-serif;
     background-color: #f9f9f9;
 }
 
+/* 导航栏样式 */
+.navbar {
+    background-color: #007bff;
+}
+.navbar-brand {
+    color: #fff !important;
+    font-weight: bold;
+}
+
+/* 分类区块样式 */
 .category-section {
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 2rem;
 }
 
-.card {
-    transition: transform 0.2s;
+/* 卡片样式 */
+.card,
+.work-card {
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-
-.card:hover {
+.card:hover,
+.work-card:hover {
     transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.card-text {
+    font-size: 0.9rem;
+}
+
+/* 按钮样式 */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* 章节预览样式 */
+.chapter-preview {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
