@@ -1,48 +1,53 @@
-// 动态加载小说预览
-function loadNovelPreviews() {
-    // 示例：加载 fanfiction/fkmt1 的章节预览
-    const category = 'fanfiction'; // 小说分类
-    const workId = 'fkmt1'; // 小说 ID
-    const jsonPath = `novels/${category}/${workId}/chapters.json`; // 拼接路径
-
-    fetch(jsonPath)
+// 动态加载章节目录和内容
+function loadNovel(chaptersConfigPath) {
+    // 加载 chapters.json 文件
+    fetch(chaptersConfigPath)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.json();
         })
         .then(data => {
-            const container = document.getElementById('novelPreview');
-            container.innerHTML = ''; // 清空容器
-            data.chapters.slice(0, 3).forEach(chapter => {
-                container.innerHTML += `
-                    <div class="preview-item mb-3">
-                        <h4>${chapter.title}</h4>
-                        <p>${chapter.preview}</p>
-                        <a href="novels/${category}/${workId}/${chapter.file}" class="btn btn-sm btn-link">继续阅读 →</a>
-                        <hr>
-                    </div>
-                `;
+            const chapterList = document.getElementById('chapterList');
+            const chapterContent = document.getElementById('chapterContent');
+
+            // 清空目录和内容
+            chapterList.innerHTML = '';
+            chapterContent.innerHTML = '<h2>章节内容加载中...</h2>';
+
+            // 动态生成目录
+            data.chapters.forEach((chapter, index) => {
+                const chapterItem = document.createElement('li');
+                chapterItem.className = 'list-group-item';
+                chapterItem.innerHTML = `<a href="#" data-file="${chapter.file}">${chapter.title}</a>`;
+                chapterItem.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadChapterContent(`novels/${chapter.file}`);
+                });
+                chapterList.appendChild(chapterItem);
+
+                // 默认加载第一章
+                if (index === 0) {
+                    loadChapterContent(`novels/${chapter.file}`);
+                }
             });
         })
         .catch(error => {
-            console.error('加载章节预览失败:', error);
-            document.getElementById('novelPreview').innerHTML = `
-                <div class="alert alert-danger">章节预览加载失败，请刷新页面。</div>
+            console.error('加载章节目录失败:', error);
+            document.getElementById('chapterList').innerHTML = `
+                <div class="alert alert-danger">章节目录加载失败，请刷新页面。</div>
             `;
         });
 }
 
-// 动态加载完整章节
-function loadChapterContent(chapterFile) {
-    const filePath = `novels/${chapterFile}`; // 拼接路径
-
+// 加载章节内容
+function loadChapterContent(filePath) {
     fetch(filePath)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.text();
         })
-        .then(text => {
-            document.getElementById('chapterContent').innerHTML = marked.parse(text); // 使用 marked.js 渲染 Markdown
+        .then(markdown => {
+            document.getElementById('chapterContent').innerHTML = marked.parse(markdown);
         })
         .catch(error => {
             console.error('加载章节内容失败:', error);
@@ -54,5 +59,6 @@ function loadChapterContent(chapterFile) {
 
 // 页面加载完成后自动执行
 window.addEventListener('DOMContentLoaded', () => {
-    loadNovelPreviews(); // 加载小说预览
+    // 示例：加载 fanfiction/fkmt2 的章节配置
+    loadNovel('novels/fanfiction/fkmt2/chapters.json');
 });

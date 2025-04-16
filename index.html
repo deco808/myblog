@@ -2,70 +2,130 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deco的博客</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <!-- 合并CSS引用 -->
     <link rel="stylesheet" href="css/style.css">
-    <!-- 将marked.js移到正确位置 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* 自定义样式 */
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f9f9f9;
+        }
+        .navbar {
+            background-color: #007bff;
+        }
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: bold;
+        }
+        .category-section {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .card-text {
+            font-size: 0.9rem;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <!-- 导航栏内容 -->
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Deco的博客</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">关于</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">联系</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <div class="container mt-5" id="novelCategories"></div>
+    <!-- 内容区域 -->
+    <div class="container mt-4">
+        <div id="novelCategories"></div>
+    </div>
 
     <script src="novels/js/loadContent.js"></script>
-    <!-- 添加错误处理 -->
     <script>
-    fetch('novels/categories.json')
-        .then(res => {
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            return res.json();
-        })
-        .then(data => {
-           const container = document.getElementById('novelCategories');
-        
-        data.categories.forEach(category => {
-            // 创建分类区块
-            const categoryHTML = `
-                <div class="category-section mb-5">
-                    <h2 class="text-primary mb-4">${category.name}</h2>
-                    <div class="row g-4" id="works-${category.type}">
-                        <!-- 作品卡片将在此动态生成 -->
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', categoryHTML);
-            
-            // 填充作品卡片
-            const worksContainer = document.getElementById(`works-${category.type}`);
-            category.works.forEach(work => {
-                const workCard = `
-                    <div class="col-md-4">
-                        <div class="card h-100 shadow">
-                            <div class="card-body">
-                                <h5 class="card-title">${work.title}</h5>
-                                <p class="card-text text-muted">${work.description || '暂无简介'}</p>
-                                <a href="novels/work.html?category=${category.type}&work=${work.id}" 
-                                   class="btn btn-primary">
-                                   查看作品
-                                </a>
+        fetch('novels/categories.json')
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                const container = document.getElementById('novelCategories');
+                data.categories.forEach(category => {
+                    // 创建分类区块
+                    const categoryHTML = `
+                        <div class="category-section mb-5">
+                            <h2 class="text-primary mb-4">${category.name}</h2>
+                            <div class="row g-4" id="works-${category.type}">
+                                <!-- 作品卡片将在此动态生成 -->
                             </div>
                         </div>
-                    </div>
-                `;
-                worksContainer.insertAdjacentHTML('beforeend', workCard);
+                    `;
+                    container.insertAdjacentHTML('beforeend', categoryHTML);
+
+                    // 填充作品卡片
+                    const worksContainer = document.getElementById(`works-${category.type}`);
+                    category.works.forEach(work => {
+                        const workCard = `
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${work.title}</h5>
+                                        <p class="card-text text-muted">${work.description || '暂无简介'}</p>
+                                        <a href="novels/${work.chapters_config}" class="btn btn-primary">
+                                            查看作品
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        worksContainer.insertAdjacentHTML('beforeend', workCard);
+                    });
                 });
+            })
+            .catch(error => {
+                console.error('加载失败:', error);
+                document.getElementById('novelCategories').innerHTML = `
+                    <div class="alert alert-danger">作品加载失败，请刷新重试</div>
+                `;
             });
-        })
-        .catch(error => {
-            console.error('加载失败:', error);
-            document.getElementById('novelCategories').innerHTML = `
-                <div class="alert alert-danger">作品加载失败，请刷新重试</div>
-            `;
-        });
     </script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-              
- 

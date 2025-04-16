@@ -17,3 +17,23 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+/* filepath: c:\Users\李淑新\myblog\css\style.css */
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background-color: #f9f9f9;
+}
+
+.category-section {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
