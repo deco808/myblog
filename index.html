@@ -78,7 +78,6 @@
         <div id="novelCategories"></div>
     </div>
 
-    <script src="novels/js/loadContent.js"></script>
     <script>
         fetch('novels/categories.json')
             .then(res => {
@@ -102,20 +101,33 @@
                     // 填充作品卡片
                     const worksContainer = document.getElementById(`works-${category.type}`);
                     category.works.forEach(work => {
-                        const workCard = `
-                            <div class="col-12 col-sm-6 col-md-4">
-                                <div class="card h-100 shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${work.title}</h5>
-                                        <p class="card-text text-muted">${work.description || '暂无简介'}</p>
-                                        <a href="novels/${work.chapters_config}" class="btn btn-primary">
-                                            查看作品
-                                        </a>
+                        // 动态加载 chapters.json 文件
+                        fetch(`novels/${work.chapters_config}`)
+                            .then(res => res.json())
+                            .then(chaptersData => {
+                                // 获取第一章的文件路径
+                                const firstChapter = chaptersData.chapters[0];
+                                const firstChapterPath = `novels/${firstChapter.file}`;
+
+                                // 创建作品卡片
+                                const workCard = `
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <div class="card h-100 shadow-sm">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${work.title}</h5>
+                                                <p class="card-text text-muted">${work.description || '暂无简介'}</p>
+                                                <a href="${firstChapterPath}" class="btn btn-primary" target="_blank">
+                                                    查看作品
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        `;
-                        worksContainer.insertAdjacentHTML('beforeend', workCard);
+                                `;
+                                worksContainer.insertAdjacentHTML('beforeend', workCard);
+                            })
+                            .catch(error => {
+                                console.error(`加载章节配置失败: ${error}`);
+                            });
                     });
                 });
             })
