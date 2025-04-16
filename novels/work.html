@@ -7,24 +7,6 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <style>
-        body {
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-        #sidebar {
-            width: 300px;
-            border-right: 1px solid #ddd;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        #content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-    </style>
 </head>
 <body>
     <!-- 左侧目录导航栏 -->
@@ -48,6 +30,7 @@
         const workId = urlParams.get('work');
 
         // 动态加载小说目录和内容
+        console.log('加载小说目录:', `../${category}/${workId}/chapters.json`);
         loadNovel(`../${category}/${workId}/chapters.json`);
     </script>
 </body>
