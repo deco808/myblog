@@ -1,6 +1,5 @@
 // 动态加载章节目录和内容
 function loadNovel(chaptersConfigPath) {
-    // 加载 chapters.json 文件
     fetch(chaptersConfigPath)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);

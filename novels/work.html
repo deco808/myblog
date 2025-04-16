@@ -7,6 +7,43 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: row; /* 默认是水平布局 */
+            height: 100vh;
+            overflow: hidden;
+        }
+        #sidebar {
+            width: 300px; /* 默认宽度 */
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        #content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* 在手机设备上将目录栏移动到底部 */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column; /* 改为垂直布局 */
+            }
+            #sidebar {
+                width: 100%; /* 占满宽度 */
+                border-right: none;
+                border-top: 1px solid #ddd;
+                height: 150px; /* 设置高度 */
+                overflow-y: auto;
+            }
+            #content {
+                flex: 1;
+                overflow-y: auto;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- 左侧目录导航栏 -->
